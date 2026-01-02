@@ -14,10 +14,20 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
+    "@tanstack/vue-table": "^8.21.3",
+    "@vueuse/core": "^12.8.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.562.0",
     "nuxt": "^4.2.2",
+    "nuxt-shiki": "^0.3.1",
+    "reka-ui": "^2.7.0",
     "shadcn-vue": "^2.4.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "vue-router": "^4.6.4",
+    "vue-sonner": "^2.0.9"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.4.1",

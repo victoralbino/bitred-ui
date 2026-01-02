@@ -1,6 +1,7 @@
 {
   "$schema": "https://shadcn-vue.com/schema/registry.json",
   "name": "bitred-ui",
+  "namespace": "bitredui",
   "homepage": "https://ui.bitred.com.br",
   "items": [
     {
@@ -10,7 +11,164 @@
       "description": "Um bloco de teste do registry.",
       "files": [
         {
-          "path": "registry/new-york/HelloWorld/HelloWorld.vue",
+          "path": "registry/new-york/blocks/HelloWorld/HelloWorld.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "datatable",
+      "type": "registry:block",
+      "title": "Data Table",
+      "description": "Advanced data table component with sorting, pagination, column pinning, reordering and editable cells.",
+      "dependencies": ["@tanstack/vue-table"],
+      "registryDependencies": [
+        "table",
+        "button",
+        "select",
+        "skeleton",
+        "dropdown-menu",
+        "badge",
+        "checkbox",
+        "input",
+        "tooltip",
+        "spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTable.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableBody.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableHeader.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableToolbar.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableSkeleton.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableEmpty.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTablePinnedRow.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/DataTableColumnManager.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/PaginationClient.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/PaginationServer.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/types.d.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/useDataTableState.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/useColumnReorder.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/useColumnPinning.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/css/datatable.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/css/datatable.base.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/css/datatable.pinning.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/css/datatable.reorder.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/css/datatable.drag-preview.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/headers/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/headers/DataTableAdvancedHeader.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/headers/DataTableSortableHeader.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/headers/SelectCheckbox.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/useColumnManager.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerActions.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerEmpty.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerHeader.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerItem.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerSearch.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/column-manager/ColumnManagerTrigger.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/inputs/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/blocks/Datatable/inputs/EditableCell.vue",
           "type": "registry:component"
         }
       ]

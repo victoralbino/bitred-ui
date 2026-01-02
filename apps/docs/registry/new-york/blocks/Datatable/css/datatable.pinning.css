@@ -1,0 +1,137 @@
+@layer components {
+    /* ===== Column Pinning ===== */
+
+    .data-table-cell-pinned-left,
+    .data-table-cell-pinned-right {
+        box-sizing: border-box;
+        flex-shrink: 0;
+        position: sticky;
+        z-index: 4;
+        background-color: var(--dt-bg) !important;
+    }
+
+    .data-table-cell-pinned-left::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -8px;
+        bottom: 0;
+        width: 8px;
+        background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.05),
+                transparent
+        );
+        pointer-events: none;
+    }
+
+    .dark .data-table-cell-pinned-left::after {
+        background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.3),
+                transparent
+        );
+    }
+
+    .data-table-cell-pinned-right::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -8px;
+        bottom: 0;
+        width: 8px;
+        background: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 0.05),
+                transparent
+        );
+        pointer-events: none;
+    }
+
+    .dark .data-table-cell-pinned-right::before {
+        background: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 0.3),
+                transparent
+        );
+    }
+
+    .data-table-cell-pinned-left {
+        border-right: 2px solid var(--dt-border);
+    }
+
+    .data-table-cell-pinned-right {
+        border-left: 2px solid var(--dt-border);
+    }
+
+    .data-table-header-cell.data-table-cell-pinned-left,
+    .data-table-header-cell.data-table-cell-pinned-right {
+        z-index: 15 !important;
+        background-color: var(--dt-pinned-header-bg) !important;
+    }
+
+    .data-table-header.sticky .data-table-header-cell.data-table-cell-pinned-left,
+    .data-table-header.sticky .data-table-header-cell.data-table-cell-pinned-right {
+        z-index: 20 !important;
+    }
+
+    .data-table-header-cell.data-table-cell-pinned-left:hover,
+    .data-table-header-cell.data-table-cell-pinned-right:hover {
+        z-index: 15 !important;
+    }
+
+    .data-table-header-cell.data-table-cell-pinned-left.is-dragging,
+    .data-table-header-cell.data-table-cell-pinned-right.is-dragging {
+        z-index: 1000 !important;
+    }
+
+    .data-table-header-cell:not(.data-table-cell-pinned-left):not(.data-table-cell-pinned-right) {
+        z-index: 1;
+    }
+
+    .data-table-header-cell:not(.data-table-cell-pinned-left):not(.data-table-cell-pinned-right).is-dragging {
+        z-index: 1000 !important;
+    }
+
+    /* ===== Row Pinning ===== */
+
+    .data-table-row-pinned-top,
+    .data-table-row-pinned-bottom {
+        position: sticky;
+        z-index: 8;
+        background-color: var(--dt-bg) !important;
+        font-weight: 600;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+
+    .data-table-row-pinned-top {
+        top: 0;
+    }
+
+    .data-table-row-pinned-bottom {
+        bottom: 0;
+    }
+
+    .data-table-row-pinned-top .data-table-cell-pinned-left,
+    .data-table-row-pinned-top .data-table-cell-pinned-right,
+    .data-table-row-pinned-bottom .data-table-cell-pinned-left,
+    .data-table-row-pinned-bottom .data-table-cell-pinned-right {
+        z-index: 12;
+        background-color: var(--dt-bg) !important;
+    }
+
+    .data-table-striped .data-table-row:nth-child(odd) .data-table-cell-pinned-left,
+    .data-table-striped .data-table-row:nth-child(odd) .data-table-cell-pinned-right {
+        background-color: var(--dt-row-odd) !important;
+    }
+
+    .data-table-body .data-table-row:hover .data-table-cell-pinned-left,
+    .data-table-body .data-table-row:hover .data-table-cell-pinned-right {
+        background-color: var(--dt-row-hover) !important;
+    }
+
+    .data-table-row-selected .data-table-cell-pinned-left,
+    .data-table-row-selected .data-table-cell-pinned-right {
+        background-color: var(--dt-row-selected) !important;
+    }
+}

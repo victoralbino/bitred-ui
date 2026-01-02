@@ -1,6 +1,13 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "mcp__shadcnVue__search_items_in_registries",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "shadcnVue"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

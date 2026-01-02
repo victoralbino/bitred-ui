@@ -1,0 +1,56 @@
+@layer components {
+    /* ===== Column Reordering ===== */
+
+    .data-table-header-cell {
+        transition:
+                transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                background-color 0.15s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+    }
+
+    .data-table-header-cell.is-dragging {
+        opacity: 1 !important;
+        cursor: grabbing !important;
+        transform: scale(1.02) rotate(-1deg);
+        box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.2),
+                0 0 0 3px var(--color-brand-500);
+        background: color-mix(in oklab, var(--color-brand-100) 60%, #ffffff 40%) !important;
+        border: 2px solid var(--color-brand-500) !important;
+    }
+
+    .dark .data-table-header-cell.is-dragging {
+        box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 3px var(--color-brand-600);
+        background: color-mix(in oklab, var(--color-brand-700) 40%, var(--card) 60%) !important;
+        border: 2px solid var(--color-brand-600) !important;
+    }
+
+    @keyframes lift-drag {
+        0% {
+            transform: scale(1) rotate(0deg);
+            box-shadow: none;
+        }
+        100% {
+            transform: scale(1.02) rotate(-1deg);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .data-table-header-cell.is-dragging {
+        animation: lift-drag 0.2s ease-out;
+    }
+
+    .data-table-header-cell.draggable-header:hover:not(.is-dragging) {
+        background: color-mix(in oklab, var(--color-brand-100) 40%, #ffffff 60%) !important;
+        border-left: 3px solid color-mix(in oklab, var(--color-brand-500) 50%, var(--dt-border) 50%);
+        transition: all 0.1s ease;
+    }
+
+    .dark .data-table-header-cell.draggable-header:hover:not(.is-dragging) {
+        background: color-mix(in oklab, var(--color-brand-700) 30%, var(--card) 70%) !important;
+        border-left: 3px solid color-mix(in oklab, var(--color-brand-600) 60%, var(--dt-border) 40%);
+    }
+}

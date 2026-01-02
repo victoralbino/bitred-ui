@@ -1,0 +1,149 @@
+@layer components {
+    /* ===== Variantes ===== */
+    .data-table-default {
+        --dt-bg: #ffffff;
+        --dt-border: rgba(194, 201, 209, 0.51);
+        --dt-header-bg: #fafafa;
+        --dt-header-text: #00000080;
+        --dt-row-hover: #f9f9fa;
+        --dt-row-selected: #F8F8F8;
+        --dt-row-odd: #ffffff;
+        --dt-cell-text: #6E7487;
+        --dt-empty-text: #3E4454;
+        --dt-radius: 8px;
+
+        /* Header de coluna pinada (claro) */
+        --dt-pinned-header-bg: white;
+    }
+
+    .dark .data-table-default {
+        /* Tema dark */
+        --dt-bg: oklch(0.205 0 0); /* --card */
+        --dt-border: oklch(1 0 0 / 10%); /* --border */
+        --dt-header-bg: oklch(0.1942 0.0025 145.48); /* --popover */
+        --dt-header-text: oklch(0.708 0 0); /* --muted-foreground */
+        --dt-row-hover: oklch(0.269 0 0); /* --secondary */
+        --dt-row-selected: oklch(0.371 0 0); /* --accent */
+        --dt-row-odd: oklch(0.205 0 0); /* --card */
+        --dt-cell-text: oklch(0.985 0 0); /* --foreground */
+        --dt-empty-text: oklch(0.556 0 0); /* --ring */
+
+        /* Header de coluna pinada (dark) */
+        --dt-pinned-header-bg: color-mix(in oklab, var(--color-brand-700) 40%, var(--card) 60%);
+    }
+
+    .data-table-striped {
+        --dt-row-odd: #fafafa;
+    }
+
+    .dark .data-table-striped {
+        --dt-row-odd: oklch(0.1715 0.0026 145.46); /* --background dark */
+    }
+
+    /* ===== Layout geral ===== */
+
+    .cell-text-wrap td {
+        @apply whitespace-normal!;
+    }
+
+    .cell-text-wrap .data-table-cell {
+        white-space: normal !important;
+        word-break: break-word;
+    }
+
+    .data-table-header.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .data-table-container {
+        @apply bg-[var(--dt-bg)] border-[var(--dt-border)] font-open relative w-full;
+        border-radius: var(--dt-radius);
+        overflow: auto;
+    }
+
+    .data-table-header {
+        @apply bg-[var(--dt-header-bg)] border-b border-b-[var(--dt-border)];
+    }
+
+    .data-table-header:hover {
+        @apply bg-[var(--dt-header-bg)]!;
+    }
+
+    .data-table-header-cell:first-child {
+        border-top-left-radius: var(--dt-radius);
+    }
+
+    .data-table-header-cell:last-child {
+        border-top-right-radius: var(--dt-radius);
+    }
+
+    .data-table-header-cell {
+        @apply whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] hover:text-accent-foreground dark:hover:bg-accent/50 px-6 -ml-3 h-8 hover:bg-transparent!;
+        padding: 18px 16px 6px 16px;
+        border-right: 1px solid var(--dt-border);
+    }
+
+    .data-table-header-cell:last-child {
+        border-right: none;
+    }
+
+    .data-table-row {
+        border-bottom-width: 1px;
+        border-bottom-color: var(--dt-border);
+        transition-property: background-color;
+        transition-duration: 150ms;
+        transition-timing-function: ease;
+    }
+
+    .data-table-row:last-child .data-table-cell:first-child {
+        border-bottom-left-radius: var(--dt-radius);
+    }
+
+    .data-table-row:last-child .data-table-cell:last-child {
+        border-bottom-right-radius: var(--dt-radius);
+    }
+
+    .data-table-row:nth-child(odd) {
+        @apply bg-[var(--dt-row-odd)]!;
+    }
+
+    .data-table-body .data-table-row:hover {
+        @apply bg-[var(--dt-row-hover)]!;
+    }
+
+    .data-table-row-selected {
+        background-color: var(--dt-row-selected) !important;
+    }
+
+    .data-table-row-clickable {
+        cursor: pointer;
+    }
+
+    .data-table-cell {
+        @apply text-[var(--dt-cell-text)]! text-sm font-open;
+        border-right: 1px solid var(--dt-border);
+    }
+
+    .data-table-cell:last-child {
+        border-right: none;
+    }
+
+    .data-table-empty {
+        @apply text-[var(--dt-empty-text)]! font-open;
+    }
+
+    .data-table-body .data-table-cell:has(.editable-cell--editing) {
+        padding: 0 !important;
+    }
+
+    /* ===== Focus da célula (clique ou teclado) ===== */
+    .data-table-cell:focus,
+    .data-table-cell:focus-visible {
+        outline: oklch(0.709 0 89.876 / 0.47) auto 0.5px;
+        outline-offset: -2px;
+        position: relative;
+        z-index: 5;
+    }
+}
