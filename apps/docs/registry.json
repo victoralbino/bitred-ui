@@ -1,0 +1,19 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry.json",
+  "name": "bitred-ui",
+  "homepage": "https://ui.bitred.com.br",
+  "items": [
+    {
+      "name": "hello-world",
+      "type": "registry:block",
+      "title": "Hello World",
+      "description": "Um bloco de teste do registry.",
+      "files": [
+        {
+          "path": "registry/new-york/HelloWorld/HelloWorld.vue",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

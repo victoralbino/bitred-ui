@@ -1,19 +1,9 @@
 {
-  "name": "bitred-ui",
-  "type": "module",
   "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "nuxt": "^4.2.2",
-    "tailwindcss": "^4.1.18",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "shadcn-vue": "^2.4.3"
   }
 }
