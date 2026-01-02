@@ -1,75 +1,57 @@
-# Nuxt Minimal Starter
+# Bitred UI
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Bitred UI é um registry de componentes e blocos UI no estilo shadcn,
+focado em Vue 3 e shadcn-vue.
 
-## Setup
+Os componentes são copiados para o projeto consumidor,
+permitindo customização total do código.
 
-Make sure to install dependencies:
+## Características
 
-```bash
-# npm
+- Vue 3
+- shadcn-vue
+- Tailwind CSS v4
+- Registry estático em JSON
+- Sem runtime adicional
+
+## Pré-requisitos
+
+- Node.js 18+
+- Projeto Vue 3 ou Nuxt
+- shadcn-vue inicializado
+
+Inicialização do shadcn-vue:
+
+npx shadcn-vue@latest init
+
+## Instalação de um componente
+
+npx shadcn-vue@latest add https://ui.bitred.com.br/r/hello-world.json
+
+O comando copia o código diretamente para o projeto.
+
+## Estrutura do projeto
+
+apps/docs
+- registry/
+- registry.json
+- public/r/
+- Nuxt v4
+
+## Desenvolvimento local
+
+cd apps/docs
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
 
-# pnpm
-pnpm dev
+Gerar os arquivos do registry:
 
-# yarn
-yarn dev
+npx shadcn-vue@latest build
 
-# bun
-bun run dev
-```
+## Contribuição
 
-## Production
+Leia o arquivo CONTRIBUTING.md antes de contribuir.
 
-Build the application for production:
+## Licença
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+MIT
