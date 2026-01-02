@@ -11,7 +11,7 @@
       "description": "Um bloco de teste do registry.",
       "files": [
         {
-          "path": "registry/new-york/HelloWorld/HelloWorld.vue",
+          "path": "registry/new-york/blocks/HelloWorld/HelloWorld.vue",
           "type": "registry:component"
         }
       ]
