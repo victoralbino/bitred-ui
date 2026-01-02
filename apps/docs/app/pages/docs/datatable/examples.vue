@@ -23,7 +23,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Pencil, Trash2, RefreshCw } from 'lucide-vue-next';
 import type { ColumnDef } from '@tanstack/vue-table';
-import type { PaginationMeta } from '#registry/new-york/blocks/Datatable/types';
+import type { PaginationMeta, ExtendedColumnMeta } from '#registry/new-york/blocks/Datatable/types';
+import { EditableCell } from '#registry/new-york/blocks/Datatable/inputs';
+import { createColumnMeta } from '#registry/new-york/blocks/Datatable';
 
 definePageMeta({
   layout: 'docs',
@@ -48,6 +50,14 @@ interface Product {
   category: string;
 }
 
+interface EditableProduct {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  cpf: string;
+}
+
 // Sample Data
 const users = ref<User[]>([
   { id: 1, name: 'John Doe', email: 'john@example.com', role: 'admin', status: 'active', department: 'Engineering', createdAt: '2024-01-15' },
@@ -66,6 +76,14 @@ const products = ref<Product[]>([
   { id: 3, name: 'USB-C Hub', price: 49.99, stock: 80, category: 'Accessories' },
   { id: 4, name: 'Monitor 27"', price: 399.99, stock: 30, category: 'Electronics' },
   { id: 5, name: 'Keyboard', price: 89.99, stock: 100, category: 'Accessories' },
+]);
+
+// Editable products data
+const editableProducts = ref<EditableProduct[]>([
+  { id: 1, name: 'Laptop Pro', price: 1299.99, quantity: 10, cpf: '12345678901' },
+  { id: 2, name: 'Wireless Mouse', price: 29.99, quantity: 50, cpf: '98765432100' },
+  { id: 3, name: 'USB-C Hub', price: 49.99, quantity: 25, cpf: '11122233344' },
+  { id: 4, name: 'Monitor 27"', price: 399.99, quantity: 5, cpf: '55566677788' },
 ]);
 
 // Basic columns
@@ -328,6 +346,57 @@ const productColumns: ColumnDef<Product>[] = [
     cell: ({ row }) => h(Badge, { variant: 'outline' }, () => row.getValue('category')),
   },
 ];
+
+// Editable columns - demonstrates different input types with maska
+const editableColumns: ColumnDef<EditableProduct>[] = [
+  { accessorKey: 'id', header: 'ID', size: 60 },
+  {
+    accessorKey: 'name',
+    header: 'Product Name',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'Product Name',
+      cell: { editable: true, inputType: 'text', placeholder: 'Enter name...' },
+    } as ExtendedColumnMeta<EditableProduct>,
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'Price',
+      cell: { editable: true, inputType: 'money:2', prefix: 'R$' },
+    } as ExtendedColumnMeta<EditableProduct>,
+  },
+  {
+    accessorKey: 'quantity',
+    header: 'Quantity',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'Quantity',
+      cell: { editable: true, inputType: 'number', suffix: 'un' },
+    } as ExtendedColumnMeta<EditableProduct>,
+  },
+  {
+    accessorKey: 'cpf',
+    header: 'CPF',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'CPF',
+      cell: { editable: true, inputType: 'cpf', placeholder: '000.000.000-00' },
+    } as ExtendedColumnMeta<EditableProduct>,
+  },
+];
+
+// Handle cell edit commit
+function handleCellCommit(payload: { row: EditableProduct; columnId: string; value: unknown }) {
+  console.log('Cell committed:', payload);
+  // In a real app, you would update the data here
+  const index = editableProducts.value.findIndex(p => p.id === payload.row.id);
+  if (index !== -1) {
+    (editableProducts.value[index] as Record<string, unknown>)[payload.columnId] = payload.value;
+  }
+}
 
 // Server-side pagination state
 const serverData = ref<User[]>([]);
@@ -600,6 +669,87 @@ const badgeCode = `{
     return h(Badge, { variant: 'default' }, () => status);
   },
 }`;
+
+const editableCellsCode = `import { EditableCell } from '@/components/datatable/inputs';
+import type { ExtendedColumnMeta } from '@/components/datatable/types';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  cpf: string;
+}
+
+const columns: ColumnDef<Product>[] = [
+  {
+    accessorKey: 'name',
+    header: 'Name',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'Name',
+      cell: { editable: true, inputType: 'text' },
+    } as ExtendedColumnMeta<Product>,
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'Price',
+      cell: {
+        editable: true,
+        inputType: 'money:2', // Uses maska for formatting
+        prefix: 'R$',
+      },
+    } as ExtendedColumnMeta<Product>,
+  },
+  {
+    accessorKey: 'cpf',
+    header: 'CPF',
+    cell: (props) => h(EditableCell, { cell: props.cell }),
+    meta: {
+      columnName: 'CPF',
+      cell: {
+        editable: true,
+        inputType: 'cpf', // Auto-formats to ###.###.###-##
+      },
+    } as ExtendedColumnMeta<Product>,
+  },
+];
+
+// Handle the cell-commit event
+function handleCellCommit(payload: { row: Product; columnId: string; value: unknown }) {
+  console.log('Cell edited:', payload);
+}
+
+<template>
+  <DataTable
+    :columns="columns"
+    :data="products"
+    @cell-commit="handleCellCommit"
+  />
+</template>
+
+// Available input types:
+// - text: Plain text input
+// - number: Numeric input
+// - money:2: Currency with 2 decimal places (uses maska)
+// - money:4: Currency with 4 decimal places (uses maska)
+// - cep: Brazilian postal code #####-###
+// - cpf: Brazilian CPF ###.###.###-##
+// - cnpj: Brazilian CNPJ ##.###.###/####-##
+// - cpf_cnpj: Auto-detect CPF or CNPJ`;
+
+const dependenciesCode = `// The DataTable component requires these dependencies:
+
+// Package dependencies (npm install):
+// - @tanstack/vue-table: Table core functionality
+// - maska: Input masking for editable cells
+// - vue-sonner: Toast notifications
+
+// shadcn-vue registry dependencies:
+// table, button, select, skeleton, dropdown-menu,
+// badge, checkbox, input, tooltip, spinner`;
 </script>
 
 <template>
@@ -797,6 +947,40 @@ const badgeCode = `{
       <CodeBlock :code="serverSideCode" language="vue" filename="server-side.vue" />
     </section>
 
+    <!-- Editable Cells -->
+    <section class="space-y-4">
+      <h2 class="text-2xl font-bold tracking-tight">Editable Cells</h2>
+      <p class="text-muted-foreground">
+        Table with inline editable cells. Double-click or click the edit icon to edit a cell.
+        Uses <code class="bg-muted px-1 py-0.5 rounded">maska</code> for input formatting (money, CPF, CNPJ, etc).
+      </p>
+
+      <div class="rounded-lg border p-4 bg-muted/30 mb-4">
+        <h4 class="font-semibold mb-2">Supported Input Types:</h4>
+        <ul class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-muted-foreground">
+          <li><code class="bg-muted px-1 rounded">text</code> - Plain text</li>
+          <li><code class="bg-muted px-1 rounded">number</code> - Numeric</li>
+          <li><code class="bg-muted px-1 rounded">money:2</code> - Currency (2 decimals)</li>
+          <li><code class="bg-muted px-1 rounded">money:4</code> - Currency (4 decimals)</li>
+          <li><code class="bg-muted px-1 rounded">cep</code> - Postal code</li>
+          <li><code class="bg-muted px-1 rounded">cpf</code> - CPF</li>
+          <li><code class="bg-muted px-1 rounded">cnpj</code> - CNPJ</li>
+          <li><code class="bg-muted px-1 rounded">cpf_cnpj</code> - Auto-detect</li>
+        </ul>
+      </div>
+
+      <div class="rounded-lg border">
+        <DataTable
+          :columns="editableColumns"
+          :data="editableProducts"
+          without-pagination
+          @cell-commit="handleCellCommit"
+        />
+      </div>
+
+      <CodeBlock :code="editableCellsCode" language="typescript" filename="editable-cells.ts" />
+    </section>
+
     <!-- Table with Custom Cells -->
     <section class="space-y-4">
       <h2 class="text-2xl font-bold tracking-tight">Custom Cell Rendering</h2>
@@ -877,6 +1061,52 @@ const badgeCode = `{
       <div class="rounded-lg border">
         <DataTable :columns="basicColumns" :data="users.slice(0, 4)" without-pagination />
       </div>
+    </section>
+
+    <!-- Dependencies -->
+    <section class="space-y-4">
+      <h2 class="text-2xl font-bold tracking-tight">Dependencies</h2>
+      <p class="text-muted-foreground">
+        The DataTable component requires the following dependencies to work properly.
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border p-4">
+          <h3 class="font-semibold mb-3">NPM Packages</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center gap-2">
+              <Badge variant="outline">@tanstack/vue-table</Badge>
+              <span class="text-muted-foreground">Table core functionality</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <Badge variant="outline">maska</Badge>
+              <span class="text-muted-foreground">Input masking for editable cells</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <Badge variant="outline">vue-sonner</Badge>
+              <span class="text-muted-foreground">Toast notifications</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-lg border p-4">
+          <h3 class="font-semibold mb-3">shadcn-vue Components</h3>
+          <div class="flex flex-wrap gap-2">
+            <Badge variant="secondary">table</Badge>
+            <Badge variant="secondary">button</Badge>
+            <Badge variant="secondary">select</Badge>
+            <Badge variant="secondary">skeleton</Badge>
+            <Badge variant="secondary">dropdown-menu</Badge>
+            <Badge variant="secondary">badge</Badge>
+            <Badge variant="secondary">checkbox</Badge>
+            <Badge variant="secondary">input</Badge>
+            <Badge variant="secondary">tooltip</Badge>
+            <Badge variant="secondary">spinner</Badge>
+          </div>
+        </div>
+      </div>
+
+      <CodeBlock :code="dependenciesCode" language="typescript" filename="dependencies.ts" />
     </section>
   </div>
 </template>

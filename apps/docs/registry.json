@@ -21,7 +21,7 @@
       "type": "registry:block",
       "title": "Data Table",
       "description": "Advanced data table component with sorting, pagination, column pinning, reordering and editable cells.",
-      "dependencies": ["@tanstack/vue-table"],
+      "dependencies": ["@tanstack/vue-table", "maska", "vue-sonner"],
       "registryDependencies": [
         "table",
         "button",
